@@ -89,7 +89,6 @@ if ss -tulpen | awk '{print $5}' | grep -q ":9090$" ; then
     sleep 2
 fi
 
-curl "https://snapshots-testnet.nodejumper.io/cardchain-testnet/cardchain-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.cardchaind"
 
 sudo tee /etc/systemd/system/Cardchaind.service > /dev/null << EOF
 [Unit]
