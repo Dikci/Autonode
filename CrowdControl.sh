@@ -108,11 +108,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable Cardchaind.service
 
 sudo systemctl start Cardchaind.service
-sudo systemctl stop Cardchaind
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart Cardchaind
 sudo journalctl -u Cardchaind -f --no-hostname -o cat
