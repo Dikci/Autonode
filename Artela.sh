@@ -106,11 +106,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable artelad.service
 
 sudo systemctl start artelad.service
-sudo systemctl stop artelad
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart artelad
-sudo journalctl -u artelad -f --no-hostname -o cat
