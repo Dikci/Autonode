@@ -89,8 +89,6 @@ if ss -tulpen | awk '{print $5}' | grep -q ":9090$" ; then
     sleep 2
 fi
 
-curl "https://snapshots-testnet.nodejumper.io/artela-testnet/artela-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.artelad"
-
 sudo tee /etc/systemd/system/artelad.service > /dev/null << EOF
 [Unit]
 Description=Artela node service
