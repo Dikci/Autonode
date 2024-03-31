@@ -110,11 +110,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable sided.service
 
 sudo systemctl start sided.service
-sudo systemctl stop sided
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart sided
 sudo journalctl -u sided -f --no-hostname -o cat
