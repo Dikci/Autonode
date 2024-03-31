@@ -124,11 +124,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable seda.service
 
 sudo systemctl start seda.service
-sudo systemctl stop seda.service
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart seda.service
 sudo journalctl -u seda.service -f --no-hostname -o cat
