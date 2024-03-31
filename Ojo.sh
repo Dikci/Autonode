@@ -16,7 +16,7 @@ go version
 cd && rm -rf ojo
 git clone https://github.com/ojo-network/ojo
 cd ojo
-git checkout v0.1.4
+git checkout v0.1.2
 
 make install
 
