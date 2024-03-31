@@ -25,6 +25,10 @@ cd .shardeum
 operator-cli gui start
 operator-cli start
 
+exit
+
+Cd $HOME
+
 apt install screen
 
 screen -S monitor
