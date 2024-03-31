@@ -109,11 +109,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable lavad.service
 
 sudo systemctl start lavad.service
-sudo systemctl stop lavad
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart lavad
 sudo journalctl -u lavad -f --no-hostname -o cat
