@@ -36,7 +36,7 @@ sedad config node tcp://localhost:17357
 
 echo -e Your Node Name
 read MONIKER
-sedad init $"$MONIKER" --chain-id seda-1-testnet
+sedad init "$MONIKER" --chain-id seda-1-testnet
 
 curl -Ls https://snapshots.kjnodes.com/seda-testnet/genesis.json > $HOME/.sedad/config/genesis.json
 curl -Ls https://snapshots.kjnodes.com/seda-testnet/addrbook.json > $HOME/.sedad/config/addrbook.json
