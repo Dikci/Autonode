@@ -29,7 +29,7 @@ lavad config node tcp://localhost:19957
 
 echo -e Your Node Name
 read MONIKER
-lavad init $MONIKER" --chain-id lava-testnet-2
+lavad init "$MONIKER" --chain-id lava-testnet-2
 
 curl -L https://snapshots-testnet.nodejumper.io/lava-testnet/genesis.json > $HOME/.lava/config/genesis.json
 curl -L https://snapshots-testnet.nodejumper.io/lava-testnet/addrbook.json > $HOME/.lava/config/addrbook.json
