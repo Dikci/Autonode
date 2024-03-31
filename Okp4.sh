@@ -99,11 +99,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable okp4d
 
 sudo systemctl start okp4d
-sudo systemctl stop okp4d
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart okp4d
 journalctl -u okp4d -f
