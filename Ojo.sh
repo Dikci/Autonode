@@ -108,11 +108,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable ojod.service
 
 sudo systemctl start ojod.service
-sudo systemctl stop ojod
-
-cd $HOME
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-
-sudo systemctl restart ojod
 sudo journalctl -u ojod -f --no-hostname -o cat
