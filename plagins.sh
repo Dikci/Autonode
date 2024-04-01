@@ -10,7 +10,7 @@ sudo apt install -qy screen tar wget curl libcurl4 git jq bsdmainutils make ncdu
 sudo apt -qy install curl git jq lz4 build-essential
 sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
 sudo apt install curl -y
-apt install ncdu -y
+sudo apt install ncdu -y
 
 # Обновление установленных пакетов
 sudo apt -qy upgrade
@@ -26,8 +26,8 @@ rm -rf update-golang
 # Установка Docker
 if ! command -v docker &> /dev/null
 then
- apt install docker.io -y
- apt install docker-compose -y
+ sudo apt install docker.io -y
+ sudo apt install docker-compose -y
 fi
 
 # Установка Rust
@@ -42,6 +42,3 @@ nvm install 21.7.1
 
 # Установка Python
 sudo apt install python3 -y
-
-# Установка glances
-apt install glances -y
