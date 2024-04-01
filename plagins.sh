@@ -2,6 +2,44 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+#Remove fuck windows
+sudo apt-mark hold linux-image-generic linux-headers-generic
+
+sudo apt install needrestart
+
+
+echo "[Unit]
+Description=needrestart service
+Documentation=man:needrestart
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/needrestart --noexec
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/needrestart.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable needrestart.service
+sudo systemctl start needrestart.service
+
+sudo sed -i 's/.*DISABLE_RESTART_ON_UPDATE.*/DISABLE_RESTART_ON_UPDATE=yes/' /etc/needrestart/needrestart.conf
+
+echo "DISABLE_RESTART_ON_UPDATE=yes" | sudo tee -a /etc/needrestart/needrestart.conf
+
+echo 'export NEEDRESTART_ON_UPDATE=0' >> ~/.bashrc
+source ~/.bashrc
+
+sudo sed -i 's/.*NEEDRESTART_ON_RECOMMENDED.*/NEEDRESTART_ON_RECOMMENDED=no/' /etc/needrestart/needrestart.conf
+
+
+echo 'NEEDRESTART=no' | sudo tee -a /etc/environment
+
+sudo systemctl start needrestart.service
+sudo systemctl  restart needrestart.service
+
+export DEBIAN
+
 # Обновление списка пакетов
 sudo apt -qy update
 
