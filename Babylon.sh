@@ -118,4 +118,3 @@ cd $HOME
 git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
 
 sudo systemctl restart babylond
-sudo journalctl -u babylond -f --no-hostname -o cat
