@@ -109,4 +109,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable lavad.service
 
 sudo systemctl start lavad.service
-sudo journalctl -u lavad -f --no-hostname -o cat
