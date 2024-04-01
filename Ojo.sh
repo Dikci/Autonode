@@ -108,4 +108,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable ojod.service
 
 sudo systemctl start ojod.service
-sudo journalctl -u ojod -f --no-hostname -o cat
