@@ -111,4 +111,4 @@ fi
 
 sudo systemctl daemon-reload
 sudo systemctl enable Cardchaind
-sudo systemctl restart Cardchaind && sudo journalctl -u Cardchaind -f
+sudo systemctl start Cardchaind
