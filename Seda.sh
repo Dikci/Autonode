@@ -124,4 +124,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable seda.service
 
 sudo systemctl start seda.service
-sudo journalctl -u seda.service -f --no-hostname -o cat
