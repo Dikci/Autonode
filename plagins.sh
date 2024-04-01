@@ -38,8 +38,6 @@ echo 'NEEDRESTART=no' | sudo tee -a /etc/environment
 sudo systemctl start needrestart.service
 sudo systemctl  restart needrestart.service
 
-export DEBIAN
-
 # Обновление списка пакетов
 sudo apt -qy update
 
