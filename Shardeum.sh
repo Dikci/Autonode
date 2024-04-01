@@ -27,7 +27,7 @@ operator-cli start
 
 exit
 
-Cd $HOME
+cd $HOME
 
 apt install screen
 
