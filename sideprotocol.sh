@@ -110,4 +110,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable sided.service
 
 sudo systemctl start sided.service
-sudo journalctl -u sided -f --no-hostname -o cat
