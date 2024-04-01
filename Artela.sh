@@ -108,4 +108,3 @@ sudo systemctl enable artelad.service
 curl https://snapshots-testnet.nodejumper.io/artela-testnet/artela-testnet_latest.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.artelad
 
 sudo systemctl start artelad.service
-sudo journalctl -u artelad -f --no-hostname -o cat
