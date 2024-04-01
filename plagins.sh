@@ -39,3 +39,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 nvm install 21.7.1
+
+# Установка Python
+sudo apt install python3 -y
+
+# Установка glances
+apt install glances -y
