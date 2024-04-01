@@ -64,6 +64,7 @@ if ! command -v docker &> /dev/null
 then
  sudo apt install docker.io -y
  sudo apt install docker-compose -y
+ sudo service docker start
 fi
 
 # Установка Rust
