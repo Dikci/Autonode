@@ -99,4 +99,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable okp4d
 
 sudo systemctl start okp4d
-journalctl -u okp4d -f
