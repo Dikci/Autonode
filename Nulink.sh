@@ -91,5 +91,3 @@ docker run --restart on-failure -d \
 -e NULINK_KEYSTORE_PASSWORD \
 -e NULINK_OPERATOR_ETH_PASSWORD \
 nulink/nulink nulink ursula run --no-block-until-ready
-
-docker logs -f ursula
