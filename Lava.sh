@@ -16,7 +16,7 @@ go version
 cd && rm -rf lava
 git clone https://github.com/lavanet/lava
 cd lava
-git checkout v1.0.1
+git checkout v1.2.0
 
 export LAVA_BINARY=lavad
 make install
