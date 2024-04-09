@@ -42,7 +42,7 @@ sudo systemctl  restart needrestart.service
 sudo apt -qy update
 
 # Установка необходимых пакетов
-sudo apt install -qy screen tar wget curl libcurl4 git jq bsdmainutils make ncdu gcc chrony net-tools iotop nload clang lz4 build-essential unzip libpq-dev libssl-dev pkg-config openssl ocl-icd-opencl-dev libopencl-clang-dev libgomp1 speedtest-cli sysstat protobuf-compiler
+sudo apt install -qy screen tar wget curl libcurl4 git jq bsdmainutils make ncdu gcc chrony net-tools iotop nload clang lz4 build-essential unzip libpq-dev libssl-dev pkg-config ocl-icd-opencl-dev libopencl-clang-dev libgomp1 speedtest-cli sysstat protobuf-compiler
 sudo apt -qy install curl git jq lz4 build-essential
 sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
 sudo apt install curl -y
