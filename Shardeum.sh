@@ -18,8 +18,6 @@ docker_compose_version=`wget -qO- https://api.github.com/repos/docker/compose/re
 sudo wget -O /usr/bin/docker-compose "https://github.com/docker/compose/releases/download/${docker_compose_version}/docker-compose-`uname -s`-`uname -m`"
 sudo chmod +x /usr/bin/docker-compose
 
-sudo systemctl start docker
-
 curl -O https://gitlab.com/shardeum/validator/dashboard/-/raw/main/installer.sh && chmod +x installer.sh && ./installer.sh
 
 cd .shardeum
