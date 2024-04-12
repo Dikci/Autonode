@@ -34,8 +34,6 @@ sudo apt-get update -q
 
 sudo apt-get install -qy docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
-sudo systemctl start docker
-
 echo -e "${GREEN}The preparation for the installation of the node has been successfully completed${NC}"
 
 echo "-----------------------------------------------------------------------------"
