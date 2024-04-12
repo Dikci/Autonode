@@ -34,6 +34,8 @@ sudo apt-get update -q
 
 sudo apt-get install -qy docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
+sudo systemctl start docker
+
 echo -e "${GREEN}The preparation for the installation of the node has been successfully completed${NC}"
 
 wget https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.10.23-d901d853.tar.gz
