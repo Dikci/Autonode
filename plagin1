@@ -5,7 +5,7 @@ export DEBIAN_FRONTEND=noninteractive
 #Remove fuck windows
 sudo apt-mark hold linux-image-generic linux-headers-generic
 
-sudo apt install needrestart
+sudo apt install needrestart -y
 
 
 echo "[Unit]
