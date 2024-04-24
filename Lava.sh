@@ -36,6 +36,8 @@ curl -L https://snapshots-testnet.nodejumper.io/lava-testnet/addrbook.json > $HO
 
 sed -i -e 's|^seeds *=.*|seeds = "3a445bfdbe2d0c8ee82461633aa3af31bc2b4dc0@prod-pnet-seed-node.lavanet.xyz:26656,e593c7a9ca61f5616119d6beb5bd8ef5dd28d62d@prod-pnet-seed-node2.lavanet.xyz:26656,ade4d8bc8cbe014af6ebdf3cb7b1e9ad36f412c0@testnet-seeds.polkachu.com:19956"|' $HOME/.lava/config/config.toml
 
+sed -i.bak -e "s%^proxy_app = \\"tcp://127.0.0.1:26658\\"%proxy_app = \\"tcp://127.0.0.1:$PROXY_APP_PORT\\"%; s%^laddr = \\"tcp://127.0.0.1:26657\\"%laddr = \\"tcp://127.0.0.1:$LADDR_PORT\\"%; s%^pprof_laddr = \\"localhost:6060\\"%pprof_laddr = \\"localhost:$LADDR_P2P_PORT\\"%; s%^laddr = \\"tcp://0.0.0.0:26656\\"%laddr = \\"tcp://0.0.0.0:$PPROF_LADDR_PORT\\"%; s%^prometheus_listen_addr = \\":26660\\"%prometheus_listen_addr = \\":$PROMETHEUS_PORT\\"%" $HOME/.lava/config/config.toml && sed -i.bak -e "s%^address = \\"0.0.0.0:9090\\"%address = \\"0.0.0.0:$GRPC_PORT\\"%; s%^address = \\"0.0.0.0:9091\\"%address = \\"0.0.0.0:$GRPC_WEB_PORT\\"%; s%^address = \\"tcp://0.0.0.0:1317\\"%address = \\"tcp://0.0.0.0:$API_PORT\\"%" $HOME/.lava/config/app.toml && sed -i.bak -e "s%^node = \\"tcp://localhost:26657\\"%node = \\"tcp://localhost:$LADDR_PORT\\"%" $HOME/.lava/config/client.toml
+
 sed -i -e 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.000001ulava"|' $HOME/.lava/config/app.toml
 
 sed -i \
