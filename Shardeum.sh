@@ -1,11 +1,7 @@
 curl -O https://gitlab.com/shardeum/validator/dashboard/-/raw/main/installer.sh && chmod +x installer.sh && ./installer.sh
 
-cd .shardeum
-./shell.sh
-operator-cli gui start
-operator-cli start
-
-exit
+docker exec shardeum-dashboard /bin/bash -c "operator-cli start"
+docker exec shardeum-dashboard /bin/bash -c "operator-cli gui start"
 
 cd $HOME
 
