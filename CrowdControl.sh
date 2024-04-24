@@ -39,6 +39,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.cardchain
 sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.0ubpf"|g' $HOME/.cardchaind/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.cardchaind/config/config.toml
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.cardchaind/config/config.toml
+sed -i.bak -e "s%^proxy_app = \\"tcp://127.0.0.1:26658\\"%proxy_app = \\"tcp://127.0.0.1:$PROXY_APP_PORT\\"%; s%^laddr = \\"tcp://127.0.0.1:26657\\"%laddr = \\"tcp://127.0.0.1:$LADDR_PORT\\"%; s%^pprof_laddr = \\"localhost:6060\\"%pprof_laddr = \\"localhost:$LADDR_P2P_PORT\\"%; s%^laddr = \\"tcp://0.0.0.0:26656\\"%laddr = \\"tcp://0.0.0.0:$PPROF_LADDR_PORT\\"%; s%^prometheus_listen_addr = \\":26660\\"%prometheus_listen_addr = \\":$PROMETHEUS_PORT\\"%" $HOME/.cardchaind/config/config.toml && sed -i.bak -e "s%^address = \\"0.0.0.0:9090\\"%address = \\"0.0.0.0:$GRPC_PORT\\"%; s%^address = \\"0.0.0.0:9091\\"%address = \\"0.0.0.0:$GRPC_WEB_PORT\\"%; s%^address = \\"tcp://0.0.0.0:1317\\"%address = \\"tcp://0.0.0.0:$API_PORT\\"%" $HOME/.cardchaind/config/app.toml && sed -i.bak -e "s%^node = \\"tcp://localhost:26657\\"%node = \\"tcp://localhost:$LADDR_PORT\\"%" $HOME/.cardchaind/config/client.toml
 
 sudo tee /etc/systemd/system/Cardchaind.service > /dev/null <<EOF
 [Unit]
