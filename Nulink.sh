@@ -49,7 +49,7 @@ read NAME_FILE_PRIVATE
 echo -e "${RED}YOUR WORKER'S ADDRESS${NC}"
 read WORKER_ADDRESS
 
-docker run -it --rm \
+docker run --rm \
 -p 9151:9151 \
 -v /root/nulink:/code \
 -v /root/nulink:/home/circleci/.local/share/nulink \
