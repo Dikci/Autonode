@@ -43,10 +43,6 @@ sed -i \
   -e 's|^pruning-interval *=.*|pruning-interval = "17"|' \
   $HOME/.mineplex-chain/config/app.toml
 
-sed -i -e "s%:1317%:26017%; s%:8080%:26080%; s%:9090%:26090%; s%:9091%:26091%; s%:8545%:26045%; s%:8546%:26046%; s%:6065%:26065%" $HOME/.mineplex-chain/config/app.toml
-sed -i -e "s%:26658%:26058%; s%:26657%:26057%; s%:6060%:26060%; s%:26656%:26056%; s%:26660%:26061%" $HOME/.mineplex-chain/config/config.toml
-
-
 curl "https://snapshots-testnet.nodejumper.io/crossfi-testnet/crossfi-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.mineplex-chain"
 
 sudo tee /etc/systemd/system/crossfid.service > /dev/null << EOF
