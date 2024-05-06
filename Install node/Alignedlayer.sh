@@ -4,9 +4,6 @@ sudo apt -qy upgrade
 sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
 sudo apt install curl -y
 
-curl https://get.ignite.com/cli | bash
-sudo mv ignite /usr/local/bin/
-
 VERSION=1.21.6
 wget -O go.tar.gz https://go.dev/dl/go$VERSION.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go.tar.gz && rm go.tar.gz
@@ -16,56 +13,67 @@ echo 'export GO111MODULE=on' >> $HOME/.bash_profile
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
 go version
 
-rm -rf $HOME/aligned_layer_tendermint
-git clone https://github.com/yetanotherco/aligned_layer_tendermint.git
-cd $HOME/aligned_layer_tendermint
-git checkout 98643167990f8a597b331ddd879e079bafb25b08
-make build-linux
-
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+cd $HOME
+rm -rf aligned_layer_tendermint
+wget https://snap.nodex.one/alignedlayer-testnet/alignedlayerd
+chmod +x $HOME/alignedlayerd
+mkdir -p $HOME/.alignedlayer/cosmovisor/genesis/bin
+mv alignedlayerd $HOME/.alignedlayer/cosmovisor/genesis/bin/
 
 echo -e Your Node Name
 read MONIKER
 alignedlayerd init "$MONIKER" --chain-id alignedlayer
 
-wget -O $HOME/.alignedlayer/config/genesis.json https://testnet-files.itrocket.net/alignedlayer/genesis.json
-wget -O $HOME/.alignedlayer/config/addrbook.json https://testnet-files.itrocket.net/alignedlayer/addrbook.json
+sudo ln -s $HOME/.alignedlayer/cosmovisor/genesis $HOME/.alignedlayer/cosmovisor/current -f
+sudo ln -s $HOME/.alignedlayer/cosmovisor/current/bin/alignedlayerd /usr/local/bin/alignedlayerd -f
 
-SEEDS="d1a8816c1c5800b352c2a1eb0e7a156bce34ae9f@alignedlayer-testnet-seed.itrocket.net:50656"
-PEERS="144c2d4fbbaf54dda837bfbc88b688fb2f02c92f@alignedlayer-testnet-peer.itrocket.net:50656,2567ea5aed4bba4e3062a1072a8f1e7fb4e4497c@65.109.85.36:26656,51ca4087558ebe93a16e3f1e84a969d30e7a91f1@95.216.245.35:26656,4093bf12076818a82f9fc1c75dc974e1d93daf44@195.201.30.159:26656,df898a791ae0aa21c1e2029c90ff8275104860d8@37.60.248.171:26656,692729135ab36bf8e9fbd65ce8f1913665bed299@188.40.109.171:26656,18e1adeadb8cc596375e4212288fcd00690df067@213.199.48.195:26656,7292de855372480ae23dbcaf94d36ead187cf6a8@194.163.143.206:50656,a1d6d9569789a7a8765f0a4899439819f07755d4@213.133.103.213:26656,afeea4cd47aa80504adbdaa8aa019864e291de55@[2a03:cfc0:8000:13::b910:277f]:13356,5be66a14f474ea7c8abe6d576758fa14d1289793@154.12.228.190:26656"
-sed -i -e "s/^seeds *=.*/seeds = \"$SEEDS\"/; s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.alignedlayer/config/config.toml
+curl -Ls https://snap.nodex.one/alignedlayer-testnet/genesis.json > $HOME/.alignedlayer/config/genesis.json
+curl -Ls https://snap.nodex.one/alignedlayer-testnet/addrbook.json > $HOME/.alignedlayer/config/addrbook.json
 
-sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.alignedlayer/config/app.toml
-sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.alignedlayer/config/app.toml
-sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.alignedlayer/config/app.toml
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
 
-sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.0001stake"|g' $HOME/.alignedlayer/config/app.toml
-sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.alignedlayer/config/config.toml
-sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.alignedlayer/config/config.toml
+sed -i -e "s|^seeds *=.*|seeds = \"d1d43cc7c7aef715957289fd96a114ecaa7ba756@testnet-seeds.nodex.one:24210\"|" $HOME/.alignedlayer/config/config.toml
+
+sed -i -e 's|^persistent_peers *=.*|persistent_peers = "a1a98d9caf27c3363fab07a8e57ee0927d8c7eec@128.140.3.188:26656,1beca410dba8907a61552554b242b4200788201c@91.107.239.79:26656,f9000461b5f535f0c13a543898cc7ac1cd10f945@88.99.174.203:26656,ca2f644f3f47521ff8245f7a5183e9bbb762c09d@116.203.81.174:26656,dc2011a64fc5f888a3e575f84ecb680194307b56@148.251.235.130:20656"|' $HOME/.alignedlayer/config/config.toml
+
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.0001stake\"|" $HOME/.alignedlayer/config/app.toml
+
+sed -i \
+  -e 's|^pruning *=.*|pruning = "custom"|' \
+  -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
+  -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
+  -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
+  $HOME/.alignedlayer/config/app.toml
+
+sed -i \
+  -e 's|^chain-id *=.*|chain-id = "alignedlayer"|' \
+  -e 's|^keyring-backend *=.*|keyring-backend = "test"|' \
+  -e 's|^node *=.*|node = "tcp://localhost:24257"|' \
+  $HOME/.alignedlayer/config/client.toml
 
 
-alignedlayerd tendermint unsafe-reset-all --home $HOME/.alignedlayer
-if curl -s --head curl https://testnet-files.itrocket.net/alignedlayer/snap_alignedlayer.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
-  curl https://testnet-files.itrocket.net/alignedlayer/snap_alignedlayer.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.alignedlayer
-    else
-  echo no have snap
-fi
+curl -L https://snap.nodex.one/alignedlayer-testnet/alignedlayer-latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.alignedlayer
+[[ -f $HOME/.alignedlayer/data/upgrade-info.json ]] && cp $HOME/.alignedlayer/data/upgrade-info.json $HOME/.alignedlayer/cosmovisor/genesis/upgrade-info.json
 
-sudo tee /etc/systemd/system/alignedlayerd.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/alignedlayer.service > /dev/null << EOF
 [Unit]
-Description=Alignedlayer node
+Description=alignedlayer node service
 After=network-online.target
+ 
 [Service]
 User=$USER
-WorkingDirectory=$HOME/.alignedlayer
-ExecStart=$(which alignedlayerd) start --home $HOME/.alignedlayer
+ExecStart=$(which cosmovisor) run start
 Restart=on-failure
-RestartSec=5
+RestartSec=10
 LimitNOFILE=65535
+Environment="DAEMON_HOME=$HOME/.alignedlayer"
+Environment="DAEMON_NAME=alignedlayerd"
+Environment="UNSAFE_SKIP_BACKUP=true"
+ 
 [Install]
 WantedBy=multi-user.target
 EOF
 
 sudo systemctl daemon-reload
-sudo systemctl enable alignedlayerd
+sudo systemctl enable alignedlayer
 sudo systemctl start alignedlayerd
