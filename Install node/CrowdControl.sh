@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install curl git wget htop tmux build-essential jq make lz4 gcc unzip -y
 sudo apt -qy install curl git jq lz4 build-essential
