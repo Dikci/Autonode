@@ -79,4 +79,4 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable side.service
 
-sudo systemctl start sided.service
+sudo systemctl start side.service
