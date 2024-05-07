@@ -45,7 +45,7 @@ sed -i \
   $HOME/.elys/config/app.toml
 
 
-curl "https://snapshots-testnet.nodejumper.io/elys-testnet/elys-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.elys"
+curl https://testnet-files.itrocket.net/elys/snap_elys.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.elys
 
 sudo tee /etc/systemd/system/elysd.service > /dev/null << EOF
 [Unit]
