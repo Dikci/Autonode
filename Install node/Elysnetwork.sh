@@ -19,7 +19,7 @@ git clone https://github.com/elys-network/elys
 cd elys
 git checkout v0.30.0
 
-ROCKSDB=1 LD_LIBRARY_PATH=/usr/local/lib make install
+make install
 
 go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
 
