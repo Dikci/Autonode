@@ -55,14 +55,14 @@ if curl -s --head curl https://testnet-files.itrocket.net/galactica/snap_galacti
   echo no have snap
 fi
 
-sudo tee /etc/systemd/system/uniond.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/galacticad.service > /dev/null <<EOF
 [Unit]
-Description=Union node
+Description=Galactica node
 After=network-online.target
 [Service]
 User=$USER
-WorkingDirectory=$HOME/.union
-ExecStart=$(which uniond) start --home $HOME/.union
+WorkingDirectory=$HOME/.galactica
+ExecStart=$(which galacticad) start --home $HOME/.galactica --chain-id galactica_9302-1
 Restart=on-failure
 RestartSec=5
 LimitNOFILE=65535
