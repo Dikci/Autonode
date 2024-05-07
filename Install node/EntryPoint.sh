@@ -20,10 +20,6 @@ chmod +x entrypointd
 mkdir -p $HOME/go/bin/
 mv entrypointd $HOME/go/bin/
 
-make install
-
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
-
 entrypointd config chain-id entrypoint-pubtest-2
 entrypointd config keyring-backend test
 entrypointd config node tcp://localhost:26657
