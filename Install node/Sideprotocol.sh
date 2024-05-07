@@ -15,53 +15,68 @@ echo 'export GO111MODULE=on' >> $HOME/.bash_profile
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
 go version
 
-cd && rm -rf sidechain
-git clone https://github.com/sideprotocol/sidechain.git
-cd sidechain
-git checkout v0.7.0-rc2
+cd $HOME
+rm -rf side
+git clone https://github.com/sideprotocol/side.git
+cd side
+git checkout v0.8.1
 
-make install
+make build
 
-go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@latest
+mkdir -p $HOME/.side/cosmovisor/genesis/bin
+mv build/sided $HOME/.side/cosmovisor/genesis/bin/
+rm -rf build
 
-sided config chain-id side-testnet-3
+sudo ln -s $HOME/.side/cosmovisor/genesis $HOME/.side/cosmovisor/current -f
+sudo ln -s $HOME/.side/cosmovisor/current/bin/sided /usr/local/bin/sided -f
+
+go install cosmossdk.io/tools/cosmovisor/cmd/cosmovisor@v1.5.0
+
+sided config chain-id S2-testnet-2
 sided config keyring-backend test
-sided config node tcp://localhost:26357
+sided config node tcp://localhost:17457
 
 echo -e Your Node Name
 read MONIKER
-babylond init "$MONIKER" --chain-id bbn-test-3
+sided init "$MONIKER" --chain-id S2-testnet-2
 
-curl -L https://snapshots-testnet.nodejumper.io/side-testnet/genesis.json > $HOME/.side/config/genesis.json
-curl -L https://snapshots-testnet.nodejumper.io/side-testnet/addrbook.json > $HOME/.side/config/addrbook.json
+curl -Ls https://snapshots.kjnodes.com/side-testnet/genesis.json > $HOME/.side/config/genesis.json
+curl -Ls https://snapshots.kjnodes.com/side-testnet/addrbook.json > $HOME/.side/config/addrbook.json
 
-sed -i -e 's|^seeds *=.*|seeds = "6decdc5565bf5232cdf5597a7784bfe828c32277@158.220.126.137:11656,e9ee4fb923d5aab89207df36ce660ff1b882fc72@136.243.33.177:21656,9c14080752bdfa33f4624f83cd155e2d3976e303@side-testnet-seed.itrocket.net:45656"|' $HOME/.side/config/config.toml
+sed -i -e "s|^seeds *=.*|seeds = \"3f472746f46493309650e5a033076689996c8881@side-testnet.rpc.kjnodes.com:17459\"|" $HOME/.side/config/config.toml
 
-sed -i.bak -e "s|^proxy_app = \\\"tcp://127.0.0.1:26658\\\"|proxy_app = \\\"tcp://127.0.0.1:$PROXY_APP_PORT\\\"|; s|^laddr = \\\"tcp://127.0.0.1:26657\\\"|laddr = \\\"tcp://127.0.0.1:$LADDR_PORT\\\"|; s|^pprof_laddr = \\\"localhost:6060\\\"|pprof_laddr = \\\"localhost:$LADDR_P2P_PORT\\\"|; s|^laddr = \\\"tcp://0.0.0.0:26656\\\"|laddr = \\\"tcp://0.0.0.0:$PPROF_LADDR_PORT\\\"|; s|^prometheus_listen_addr = \\\":26660\\\"|prometheus_listen_addr = \\\":$PROMETHEUS_PORT\\\"|" $HOME/.side/config/config.toml && sed -i.bak -e "s|^address = \\\"0.0.0.0:9090\\\"|address = \\\"0.0.0.0:$GRPC_PORT\\\"|; s|^address = \\\"0.0.0.0:9091\\\"|address = \\\"0.0.0.0:$GRPC_WEB_PORT\\\"|; s|^address = \\\"tcp://0.0.0.0:1317\\\"|address = \\\"tcp://0.0.0.0:$API_PORT\\\"|" $HOME/.side/config/app.toml
-sed -i -e 's|^minimum-gas-prices *=.*|minimum-gas-prices = "0.005uside"|' $HOME/.side/config/app.toml
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.005uside\"|" $HOME/.side/config/app.toml
 
 sed -i \
   -e 's|^pruning *=.*|pruning = "custom"|' \
   -e 's|^pruning-keep-recent *=.*|pruning-keep-recent = "100"|' \
-  -e 's|^pruning-interval *=.*|pruning-interval = "17"|' \
+  -e 's|^pruning-keep-every *=.*|pruning-keep-every = "0"|' \
+  -e 's|^pruning-interval *=.*|pruning-interval = "19"|' \
   $HOME/.side/config/app.toml
 
-curl "https://snapshots-testnet.nodejumper.io/side-testnet/side-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.side"
+curl -L https://snapshots.kjnodes.com/side-testnet/snapshot_latest.tar.lz4 | tar -Ilz4 -xf - -C $HOME/.side
+[[ -f $HOME/.side/data/upgrade-info.json ]] && cp $HOME/.side/data/upgrade-info.json $HOME/.side/cosmovisor/genesis/upgrade-info.json
 
-sudo tee /etc/systemd/system/sided.service > /dev/null << EOF
+sudo tee /etc/systemd/system/side.service > /dev/null << EOF
 [Unit]
-Description=Side node service
+Description=side node service
 After=network-online.target
+
 [Service]
 User=$USER
-ExecStart=$(which sided) start
+ExecStart=$(which cosmovisor) run start
 Restart=on-failure
 RestartSec=10
 LimitNOFILE=65535
+Environment="DAEMON_HOME=$HOME/.side"
+Environment="DAEMON_NAME=sided"
+Environment="UNSAFE_SKIP_BACKUP=true"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:$HOME/.side/cosmovisor/current/bin"
+
 [Install]
 WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
-sudo systemctl enable sided.service
+sudo systemctl enable side.service
 
 sudo systemctl start sided.service
