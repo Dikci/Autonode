@@ -1,5 +1,11 @@
 #!/bin/bash
 
+sudo apt -q update
+sudo apt -qy install curl git jq lz4 build-essential
+sudo apt -qy upgrade
+sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
+sudo apt install curl -y
+
 VERSION=1.21.6
 wget -O go.tar.gz https://go.dev/dl/go$VERSION.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go.tar.gz && rm go.tar.gz
