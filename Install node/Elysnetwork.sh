@@ -44,8 +44,6 @@ sed -i \
   -e 's|^pruning-interval *=.*|pruning-interval = "17"|' \
   $HOME/.elys/config/app.toml
 
-sed -i 's|^network *=.*|network = "signet"|g' $HOME/.babylond/config/app.toml
-
 
 curl "https://snapshots-testnet.nodejumper.io/elys-testnet/elys-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.elys"
 
