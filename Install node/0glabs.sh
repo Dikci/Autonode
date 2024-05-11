@@ -50,7 +50,6 @@ sed -i -e "s/^indexer *=.*/indexer = \"$indexer\"/" $HOME/.0gchain/config/config
 
 
 cd $HOME
-snap install lz4
 cp $HOME/.0gchain/data/priv_validator_state.json $HOME/.0gchain/priv_validator_state.json.backup
 rm -rf $HOME/.0gchain/data
 curl -o - -L https://og.snapshot.stavr.tech/og-snap.tar.lz4 | lz4 -c -d - | tar -x -C $HOME/.0gchain --strip-components 2
