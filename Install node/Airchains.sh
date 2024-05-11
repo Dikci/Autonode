@@ -21,17 +21,16 @@ echo "export AIRCHAIN_CHAIN_ID="junction"" >> $HOME/.bash_profile
 echo "export AIRCHAIN_PORT="19"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
-cd $HOME
+cd $HOME && mkdir -p go/bin/
 wget https://github.com/airchains-network/junction/releases/download/v0.1.0/junctiond
 chmod +x junctiond
-sudo mv junctiond /usr/local/bin
+mv junctiond $HOME/go/bin/
 
 echo -e Your Node Name
 read MONIKER
-junctiond init "$MONIKER" --chain-id
+junctiond init "$MONIKER" --chain-id=junction
 
-wget https://github.com/airchains-network/junction/releases/download/v0.1.0/genesis.json
-cp genesis.json ~/.junction/config/genesis.json
+wget -O $HOME/.junction/config/genesis.json "https://raw.githubusercontent.com/111STAVR111/props/main/Airchains/genesis.json"
 wget -O $HOME/.junction/config/addrbook.json "https://raw.githubusercontent.com/111STAVR111/props/main/Airchains/addrbook.json"
 
 sed -i 's/minimum-gas-prices =.*$/minimum-gas-prices = "0.001amf"/' $HOME/.junction/config/app.toml
