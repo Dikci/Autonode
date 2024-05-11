@@ -53,6 +53,7 @@ sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"$pruning_interval\"/" $
 indexer="null" &&
 sed -i -e "s/^indexer *=.*/indexer = \"$indexer\"/" $HOME/.junction/config/config.toml
 
+
 cd $HOME
 apt install lz4
 sudo systemctl stop junctiond
@@ -62,6 +63,7 @@ curl -o - -L https://airchains-t.snapshot.stavr.tech/airchain-snap.tar.lz4 | lz4
 mv $HOME/.junction/priv_validator_state.json.backup $HOME/.junction/data/priv_validator_state.json
 wget -O $HOME/.junction/config/addrbook.json "https://raw.githubusercontent.com/111STAVR111/props/main/Airchains/addrbook.json"
 sudo systemctl restart junctiond && journalctl -fu junctiond -o cat
+
 
 sudo tee /etc/systemd/system/junctiond.service > /dev/null <<EOF
 [Unit]
