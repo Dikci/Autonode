@@ -56,13 +56,11 @@ sed -i -e "s/^indexer *=.*/indexer = \"$indexer\"/" $HOME/.junction/config/confi
 
 cd $HOME
 apt install lz4
-sudo systemctl stop junctiond
 cp $HOME/.junction/data/priv_validator_state.json $HOME/.junction/priv_validator_state.json.backup
 rm -rf $HOME/.junction/data
 curl -o - -L https://airchains-t.snapshot.stavr.tech/airchain-snap.tar.lz4 | lz4 -c -d - | tar -x -C $HOME/.junction --strip-components 2
 mv $HOME/.junction/priv_validator_state.json.backup $HOME/.junction/data/priv_validator_state.json
 wget -O $HOME/.junction/config/addrbook.json "https://raw.githubusercontent.com/111STAVR111/props/main/Airchains/addrbook.json"
-sudo systemctl restart junctiond && journalctl -fu junctiond -o cat
 
 
 sudo tee /etc/systemd/system/junctiond.service > /dev/null <<EOF
