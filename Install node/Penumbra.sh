@@ -26,9 +26,8 @@ go build -o cometbft ./cmd/cometbft
 mv cometbft /root/cometbft/
 make install
 ulimit -n 4096
-Apt install screen
-screen -S cometbft
-cometbft start --home ~/.penumbra/testnet_data/node0/cometbft
+apt install screen -y
+screen -d -m -S cometbft bash -c 'cometbft start --home ~/.penumbra/testnet_data/node0/cometbft'
 
 git clone https://github.com/penumbra-zone/penumbra
 cd penumbra && git fetch && git checkout v0.75.0 && cargo update
@@ -36,6 +35,4 @@ cargo build --release --bin pcli
 cargo build --release --bin pd
 cargo run --bin pd --release -- testnet unsafe-reset-all
 cargo run --bin pd --release -- testnet join
-screen -S pd
-cd penumbra
-cargo run --bin pd --release -- start --home ~/.penumbra/testnet_data/node0/pd
+screen -d -m -S pd bash -c 'cd penumbra && cargo run --bin pd --release -- start --home ~/.penumbra/testnet_data/node0/pd'
