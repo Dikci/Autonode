@@ -15,7 +15,7 @@ echo 'export GO111MODULE=on' >> $HOME/.bash_profile
 echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
 go version
 
-cd $HOME
+cd $HOME && mkdir -p go/bin/
 wget -O uniond https://testnet-files.itrocket.net/union/uniond
 chmod +x uniond
 mv uniond $HOME/go/bin/
