@@ -7,4 +7,3 @@ git checkout v0.32.0
 make install
 
 sudo systemctl restart elysd
-sudo journalctl -u elysd -f --no-hostname -o cat
