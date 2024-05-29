@@ -30,7 +30,7 @@ apt install screen -y
 screen -d -m -S cometbft bash -c 'cometbft start --home ~/.penumbra/testnet_data/node0/cometbft'
 
 git clone https://github.com/penumbra-zone/penumbra
-cd penumbra && git fetch && git checkout v0.75.0 && cargo update
+cd penumbra && git fetch && git checkout v0.76.0 && cargo update
 cargo build --release --bin pcli
 cargo build --release --bin pd
 cargo run --bin pd --release -- testnet unsafe-reset-all
