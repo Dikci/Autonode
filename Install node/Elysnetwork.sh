@@ -18,8 +18,7 @@ cd $HOME
 rm -rf elys
 git clone https://github.com/elys-network/elys.git
 cd elys
-git fetch
-git checkout v0.30.0
+git checkout v0.32.0
 make install
 
 elysd config node tcp://localhost:${ELYS_PORT}657
